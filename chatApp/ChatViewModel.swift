@@ -32,8 +32,6 @@ class ChatViewModel: NSObject, ObservableObject {
         self.session.delegate = self
         self.nearbyServiceAdvertiser.delegate = self
         self.nearbyServiceBrowser.delegate = self
-
-        startAdvertisingAndBrowsing()
     }
 
     deinit {
@@ -94,6 +92,14 @@ class ChatViewModel: NSObject, ObservableObject {
         } catch {
             print("Error sending user info: \(error.localizedDescription)")
         }
+    }
+
+    func cancelConnection() {
+        print("Cancelling connection...")
+        nearbyServiceAdvertiser.stopAdvertisingPeer()
+        nearbyServiceBrowser.stopBrowsingForPeers()
+        isConnecting = false
+        connectionState = .notConnected
     }
 }
 

@@ -18,6 +18,19 @@ struct ConnectView: View {
                                 .scaleEffect(1.5)
                             Text("Searching for nearby devices...")
                                 .padding(.top)
+                            
+                            // Add Cancel Button
+                            Button(action: {
+                                viewModel.cancelConnection()
+                            }) {
+                                Text("Cancel")
+                                    .foregroundColor(.red)
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 12)
+                                    .background(Color.red.opacity(0.1))
+                                    .cornerRadius(8)
+                            }
+                            .padding(.top, 20)
                         }
                     } else {
                         // Initial state or after explicit disconnect before search restarts
@@ -30,7 +43,23 @@ struct ConnectView: View {
                             Text("Ensure Wi-Fi or Bluetooth is enabled.")
                                 .font(.caption)
                                 .foregroundColor(.gray)
-                            // Button removed - searching starts automatically
+                            
+                            // Add Connect Button
+                            Button(action: {
+                                viewModel.startAdvertisingAndBrowsing()
+                            }) {
+                                HStack {
+                                    Image(systemName: "link.circle.fill")
+                                    Text("Connect")
+                                }
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(minWidth: 200, minHeight: 44) // Minimum 44x44 points
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                            }
+                            .padding(.top, 20)
                         }
                     }
                 case .connecting:
@@ -39,6 +68,19 @@ struct ConnectView: View {
                             .scaleEffect(1.5)
                         Text("Connecting...")
                             .padding(.top)
+                        
+                        // Add Cancel Button
+                        Button(action: {
+                            viewModel.cancelConnection()
+                        }) {
+                            Text("Cancel")
+                                .foregroundColor(.red)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 12)
+                                .background(Color.red.opacity(0.1))
+                                .cornerRadius(8)
+                        }
+                        .padding(.top, 20)
                     }
                     
                 case .connected:
@@ -70,6 +112,10 @@ struct ConnectView: View {
                             }) {
                                 Text("Disconnect")
                                     .foregroundColor(.red)
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 12)
+                                    .background(Color.red.opacity(0.1))
+                                    .cornerRadius(8)
                             }
                         }
                     } else {
